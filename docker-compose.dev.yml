@@ -1,0 +1,60 @@
+version: '3.9'
+services:
+  frontend:
+    container_name: front-react
+    build: ./frontend
+    ports:
+      - 3000:3000
+    platform: linux/x86_64
+    working_dir: /app-frontend
+    volumes:
+      - ./frontend:/app-frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"]
+      timeout: 10s
+      retries: 5
+  backend:
+    container_name: back-python
+    build: ./backend
+    ports:
+      - 8000:8000
+    working_dir: /app-backend
+    volumes:
+      - ./backend:/app-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_ENGINE=django.db.backends.mysql
+      - DB_NAME=django
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - DB_HOST=db
+      - DB_PORT=3306
+      - SECRET_KEY=jY@@A386XY@Z4NPms0p!V79U2oIbr#jfm40rEFgey*B625*txZ
+      - DJANGO_SUPERUSER_PASSWORD=%joaopster2022%
+      - DJANGO_SUPERUSER_USERNAME=joaopster
+      - DJANGO_SUPERUSER_EMAIL=joaopsterdev@gmail.com
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1"]
+      timeout: 15s
+      retries: 5
+  db:
+    image: mysql:8.0.21
+    container_name: db-mysql
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=django
+    restart: 'always'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"] # Deve aguardar o banco ficar operacional
+      timeout: 10s
+      retries: 5
+    cap_add:
+      - SYS_NICE # Deve omitir alertas menores
