@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const CarroSchema = z.object({
-  id: z.string(),
   nome: z.string(),
   marca: z.string(),
   modelo: z.string(),
@@ -13,4 +12,9 @@ export const CarroSchema = z.object({
   valor_promocional: z.number().or(z.null()),
 });
 
+export const CarroWithIdSchema = CarroSchema.extend({
+  id: z.string(),
+});
+
 export type ICarro = z.infer<typeof CarroSchema>;
+export type ICarroWithId = z.infer<typeof CarroWithIdSchema>;

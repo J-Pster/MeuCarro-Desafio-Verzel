@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import React from "react";
+import React, { useContext } from "react";
+
+import { Loading } from "../../components";
+import { GlobalContext } from "../../context/Global";
 
 const AppWrap = (
   Component: any,
@@ -9,6 +12,13 @@ const AppWrap = (
   classNames: any = null
 ) =>
   function HOC() {
+    console.log("HOC");
+
+    const { loading } = useContext(GlobalContext);
+    if (loading.loading) {
+      return <Loading />;
+    }
+
     return (
       <>
         {Header && <Header />}
