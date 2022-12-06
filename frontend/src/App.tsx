@@ -6,7 +6,8 @@ import {
   Routes,
 } from "react-router-dom";
 
-import { Home, Login } from "./pages";
+import { Home, Login, Admin } from "./pages";
+import PrivateRoute from "./context/PrivateRoute";
 
 import "./App.scss";
 
@@ -15,6 +16,14 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <Admin />
+            </PrivateRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
