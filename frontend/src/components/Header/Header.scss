@@ -1,2 +1,42 @@
 @import "../../Vars.scss";
 @import "../../Globals.scss";
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+  padding: 1rem 4rem;
+
+  .app__header-left {
+    img {
+      width: 180px;
+    }
+  }
+
+  .app__header-nav {
+    gap: .7rem;
+  }
+
+  .app__header-right {
+    gap: 1rem;
+    padding: 0 .6rem;
+    padding-left: 1rem;
+
+    border: 1px solid transparent;
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $dark-black-color;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      border-radius: 500px;
+      border: 1px solid $secondary-color;
+    }
+  }
+}
