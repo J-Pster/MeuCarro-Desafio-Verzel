@@ -5,7 +5,9 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
+    "@mui/icons-material": "^5.10.16",
     "@mui/material": "latest",
+    "@types/prop-types": "^15.7.5",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "axios": "^1.2.1",
